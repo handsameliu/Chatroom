@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-3" ng-repeat="room in rooms track by $index">
                 <!--使用自带的过滤器filter 在显示数据时过滤  room in rooms | filter:keyword track by $index-->
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-click="jumpTo(room._id)">
                     <div class="panel-body">
                         <h3 style="text-align: center">{{room.name}}</h3>
                     </div>

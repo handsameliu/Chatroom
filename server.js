@@ -61,9 +61,9 @@ app.get('/rooms',function(req,res){
 * 增加房间的路由
 * */
 app.post('/rooms',function(req,res){
-    var name = req.body.name;
+    var room = req.body;
     room.users = room.messages = [];/*设置在线人数和本房间内的消息列表都是空数组*/
-    Room.create({name},function(err,doc){
+    Room.create(room,function(err,doc){
         if(err){
             res.send({err:1,msg:'创建房间出错',data:err});
         }else{
@@ -73,6 +73,11 @@ app.post('/rooms',function(req,res){
     })
 });
 
+app.get('/rooms/:_Id',function(req,res){
+    console.log(req);
+    var roomId = req.pramas.roomId;
+    console.log(roomId);
+});
 
 app.listen(9090,function(){
     console.log('连接成功');
