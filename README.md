@@ -1,6 +1,14 @@
 # Chatroom
 angular+websoket+soketio
 
+#下载安装
+```
+bower init
+npm install
+启动server.js
+http://localhost:9090/
+```
+
 #创建项目
 ##创建文件夹并且进入
 ```
