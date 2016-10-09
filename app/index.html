@@ -13,11 +13,14 @@
                 <div class="navbar-brand">聊天室</div>
             </div>
             <div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">头像：用户名</a></li>
+                <ul ng-show="user" class="nav navbar-nav navbar-right">
+                    <li><a href=""><img ng-src="{{user.avatar}}" alt="{{user.email}}" class="img-rounded" style="width:30px;height:30px;"/>
+                        {{user.email}}
+                    </a></li>
                 </ul>
             </div>
         </nav>
+        <div class="alert alert-danger" ng-show="user.err" style="text-align: center">{{user.err}}</div>
         <div class="container" ng-view=""></div>
     </div>
 </body>

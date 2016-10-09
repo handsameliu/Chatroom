@@ -9,9 +9,16 @@ var UserSchema = new mongoose.Schema({
 });
 
 //定义可以操作用户User集合的模型对象
-var User = mongoose.module('User',UserSchema);
+var User = mongoose.model('User',UserSchema);
 
+var RoomSchema = new mongoose.Schema({
+    roomName:String
+});
+var Room = mongoose.model('Room',RoomSchema);
 
 //导出用户模型  其他脚本使用 require('db').User 获取到对应数据
-exports.User = User;
+exports = {
+    User:User,
+    Room:Room
+};
 

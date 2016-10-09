@@ -1,7 +1,8 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var User = require('db').User;
+var User = require('./db').User;
+var Room = require('./db').Room;
 var app = express();
 
 app.get('/',function(req,res){
@@ -38,6 +39,20 @@ app.post('/user/login',function(req,res){
             }
         }
     })
+});
+
+app.get('/rooms',function(req,res){
+    Room.find({},function(err,doc){
+        if(err){
+            res.send({err:1,msg:'查询出错',data:err});
+        }else{
+            if(doc){
+                res.send({err:0,msg:'成功',data:doc});
+            }else{
+                res.send({err:1,msg:'返回错误',data:doc});
+            }
+        }
+    });
 });
 
 
