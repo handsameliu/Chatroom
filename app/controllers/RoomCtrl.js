@@ -33,10 +33,13 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     //或者使用`/`, 或者window.location
     socket.on('message',function(msgObj){
         //console.log(msgObj);
+        console.log('接收信息');
         $scope.room.messages.push(msgObj);
+        console.log('刷新信息');
         $scope.room.messages = $scope.room.messages.filter(function(item){
             return true;
         });
+        console.log('刷新完毕');
         /*$scope.room.users = $scope.room.users.filter(function(item){
          return true;
          });*/
@@ -60,6 +63,7 @@ angular.module('chatMod').directive('keyDown',function(){
                     /*
                     * 在scope作用域下调用方法
                     * */
+                    console.log('发送信息');
                     scope.$eval(attrs.keyDown);
                 }
             });
