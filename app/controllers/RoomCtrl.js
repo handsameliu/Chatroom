@@ -9,7 +9,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     * */
     var _id = $routeParams.id;
     $http({
-        url:'/rooms/'+_id,
+        url:`/rooms/${_id}`,
         method:'GET'
     }).success(function(result){
         if(result.err==1){
@@ -19,4 +19,38 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
             $scope.room = result.data;
         }
     });
+
+    /*
+    * 开始聊天
+    * 1 在后台引入socket.io 监听客户端的连接请求
+    * 2 在前台连接后台的socketio服务器
+    * 3 在前台发送消息给后台，后台保存当前房间里messages数组中，并且通过所有的客户端添加此消息
+    *
+    * */
+
+    var socket = io.connect('ws://localhost:9090/');//本机测试使用ws://localhost:9090/ 服务器使用IP地址47.88.150.99
+    socket.on('message',function(msgObj){
+        $scope.room.messages.push(msgObj);
+    });
+    $scope.send = function(){
+        var content = $scope.content;
+        socket.send({
+            user:$rootScope.user,
+            content:content
+        });
+    };
+});
+angular.module('chatMod').directive('keyDown',function(){
+    return {
+        link:function(scope,element,attrs){
+            element.keydown(function(event){
+                if(event.keyCode==13){
+                    /*
+                    * 在scope作用域下调用方法
+                    * */
+                    scope.$eval(attrs.keyDown);
+                }
+            });
+        }
+    }
 });

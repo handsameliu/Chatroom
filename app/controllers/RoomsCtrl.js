@@ -1,6 +1,6 @@
 angular.module('chatMod').controller('RoomsCtrl',function($scope,$http,$rootScope,$location){
     //$scope.rooms = [{name:'JAVA'},{name:'NODE'}];
-    //$scope.rooms = $scope._rooms = [];
+    $scope.rooms = $scope._rooms = [];
     $http({
         url:'/rooms',
         type:'GET'
@@ -11,6 +11,7 @@ angular.module('chatMod').controller('RoomsCtrl',function($scope,$http,$rootScop
         }else if(result.err==0){//如果没有出错，就把返回值赋给$scope.rooms
             //if(result.data){
                 //rooms为显示数据，_rooms为过滤时使用的数据
+                //如果没有出错，就把返回来的房间数组赋给$scope.rooms属性 _rooms放过滤前的数组 rooms放过滤后的数组
                 $scope.rooms = $scope._rooms = result.data;
             //}else{
             //    $scope.rooms = [{name:'JAVA'},{name:'NODE'}];

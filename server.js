@@ -5,6 +5,7 @@ var User = require('./db').User;
 var Room = require('./db').Room;
 var app = express();
 
+
 app.get('/',function(req,res){
     res.sendFile(path.resolve('app/index.html'));
 });
@@ -19,14 +20,14 @@ app.use(express.static(path.resolve('app')));
 app.post('/user/login',function(req,res){
     var email  = req.body.email;
     var user = {email};
-    User.findOne({email},function(err,doc){
+    User.findOne(user,function(err,doc){
         if(err){
             res.send({err:1,msg:'查询出错',data:err});
         }else{
             if(doc){
                 res.send({err:0,msg:'成功',data:doc});
             }else{
-                user.avatar = 'http://secure.gravatar.com/avatar/email';
+                user.avatar = 'http://secure.gravatar.com/avatar/email32';
                 //保存此用户之后得到一个保存之后的文档
                 User.create(user,function(err,doc2){
                     if(err){
@@ -75,13 +76,12 @@ app.post('/rooms',function(req,res){
 
 app.get('/rooms/:_Id',function(req,res){
     var _id = req.params._Id;
-    console.log(_id);
-    Room.findById({_id},function(err,doc){
+    Room.findById(_id,function(err,room){
         if(err){
             res.send({err:1,msg:'进入房间出错',data:err});
         }else{
             //保存成功后返回文档对象
-            res.send({err:0,msg:'进入成功',data:doc});
+            res.send({err:0,msg:'进入成功',data:room});
         }
     });
     /*Room.findById({_id}).then(function(result){
@@ -91,9 +91,21 @@ app.get('/rooms/:_Id',function(req,res){
         res.send({err:1,msg:'进入房间出错',data:err});
     });*/
 });
+/*
+ * 监听客户端soket.io请求
+ *
+ * */
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection',function(soket){
+    //接到某个客户端消息后，广播给所有人
+    soket.on('message',function(msgObj){
+        msgObj.createAt = new Date().toLocaleString();
+        io.emit('message',msgObj);
+    });
+});
 
 
-
-app.listen(9090,function(){
+server.listen(9090,function(){
     console.log('连接成功');
 });
