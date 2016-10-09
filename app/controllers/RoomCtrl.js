@@ -34,6 +34,12 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     socket.on('message',function(msgObj){
         //console.log(msgObj);
         $scope.room.messages.push(msgObj);
+        $scope.room.messages = $scope.room.messages.filter(function(item){
+            return true;
+        });
+        /*$scope.room.users = $scope.room.users.filter(function(item){
+         return true;
+         });*/
         $scope.content = '';
         //$scope.room.users.push(msgObj.user);
     });
@@ -42,12 +48,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
             user:$rootScope.user,
             content:$scope.content
         });
-        $scope.room.messages = $scope.room.messages.filter(function(item){
-            return true;
-        });
-        /*$scope.room.users = $scope.room.users.filter(function(item){
-         return true;
-         });*/
+
     };
 });
 angular.module('chatMod').directive('keyDown',function(){
