@@ -1,0 +1,28 @@
+{
+  "name": "Chatroom",
+  "version": "1.0.0",
+  "description": "Chatroom",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/handsameliu/Chatroom.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/handsameliu/Chatroom/issues"
+  },
+  "homepage": "https://github.com/handsameliu/Chatroom#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "mongoose": "^4.6.3",
+    "socket.io": "^1.5.0"
+  }
+}
