@@ -36,15 +36,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
         console.log('接收信息');
         $scope.room.messages.push(msgObj);
         console.log('刷新信息');
-        $scope.room.messages = $scope.room.messages.filter(function(item){
-            return true;
-        });
-        console.log('刷新完毕');
-        /*$scope.room.users = $scope.room.users.filter(function(item){
-         return true;
-         });*/
-        $scope.content = '';
-        //$scope.room.users.push(msgObj.user);
+        $scope.$apply();
     });
     $scope.send = function(){
         socket.send({
