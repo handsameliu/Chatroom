@@ -34,6 +34,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     socket.on('message',function(msgObj){
         //console.log(msgObj);
         $scope.room.messages.push(msgObj);
+        $scope.content = '';
         //$scope.room.users.push(msgObj.user);
     });
     $scope.send = function(){
