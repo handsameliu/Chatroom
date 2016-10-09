@@ -12,7 +12,14 @@ var User = mongoose.model('User',UserSchema);
 
 //定义房间字段模型
 var RoomSchema = new mongoose.Schema({
-    name:String
+    name:String,
+    /*在线人数的数组 类型是对象id，引用模型是User，他里面存放的id*/
+    users:[{type:ObjectId,ref:'User'}],
+    messages:[{/*此房间内的消息数组*/
+        user:{type:ObjectId,ref:'User'},/*发表用户id*/
+        content:String,/*留言内容*/
+        createAt:{type:Date,default:Date.now()}/*发表留言时间*/
+    }]
 });
 var Room = mongoose.model('Room',RoomSchema);
 

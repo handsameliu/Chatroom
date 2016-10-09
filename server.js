@@ -57,6 +57,22 @@ app.get('/rooms',function(req,res){
     });
 });
 
+/*
+* 增加房间的路由
+* */
+app.post('/rooms',function(req,res){
+    var name = req.body.name;
+    room.users = room.messages = [];/*设置在线人数和本房间内的消息列表都是空数组*/
+    Room.create({name},function(err,doc){
+        if(err){
+            res.send({err:1,msg:'创建房间出错',data:err});
+        }else{
+            //保存成功后返回文档对象
+            res.send({err:0,msg:'创建成功',data:doc});
+        }
+    })
+});
+
 
 app.listen(9090,function(){
     console.log('连接成功');
