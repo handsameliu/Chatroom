@@ -14,8 +14,7 @@ app.use(express.static(path.resolve('public')));
 //把app目录作为静态文件根目录
 app.use(express.static(path.resolve('app')));
 /*
-* 1 获取请求体对象 客户端传递过来的格式是json
-*
+* 1 获取请求体对象 客户端传递过来的格式是json对象
 * */
 app.post('/user/login',function(req,res){
     var email  = req.body.email;
@@ -41,16 +40,19 @@ app.post('/user/login',function(req,res){
     })
 });
 
+/*
+* 房间列表的接口
+* */
 app.get('/rooms',function(req,res){
-    Room.find({},function(err,doc){
+    Room.find({},function(err,rooms){
         if(err){
             res.send({err:1,msg:'查询出错',data:err});
         }else{
-            if(doc){
-                res.send({err:0,msg:'成功',data:doc});
-            }else{
-                res.send({err:1,msg:'返回错误',data:doc});
-            }
+            //if(rooms){
+                res.send({err:0,msg:'成功',data:rooms});
+            //}else{
+            //    res.send({err:1,msg:'返回错误',data:rooms});
+            //}
         }
     });
 });
