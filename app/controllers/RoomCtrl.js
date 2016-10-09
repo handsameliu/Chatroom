@@ -12,10 +12,10 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
         url:`/rooms/${_id}`,
         method:'GET'
     }).success(function(result){
+        console.log(result);
         if(result.err==1){
             $rootScope.errMsg = result.msg;
         }else{
-            console.log(result.data);
             $scope.room = result.data;
         }
     });
@@ -28,22 +28,32 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     *
     * */
 
-    var socket = io.connect('ws://localhost:9090/');//本机测试使用ws://localhost:9090/ 服务器使用IP地址47.88.150.99
+    var socket = io.connect('ws://localhost:9090/');
+    //本机测试使用ws://localhost:9090/ 服务器使用IP地址47.88.150.99
+    //或者使用`/`, 或者window.location
     socket.on('message',function(msgObj){
+        //console.log(msgObj);
         $scope.room.messages.push(msgObj);
+        //$scope.room.users.push(msgObj.user);
     });
     $scope.send = function(){
-        var content = $scope.content;
         socket.send({
             user:$rootScope.user,
-            content:content
+            content:$scope.content
         });
+        $scope.room.messages = $scope.room.messages.filter(function(item){
+            return true;
+        });
+        /*$scope.room.users = $scope.room.users.filter(function(item){
+         return true;
+         });*/
     };
 });
 angular.module('chatMod').directive('keyDown',function(){
     return {
         link:function(scope,element,attrs){
             element.keydown(function(event){
+                console.log(event.keyCode);
                 if(event.keyCode==13){
                     /*
                     * 在scope作用域下调用方法

@@ -101,6 +101,7 @@ io.on('connection',function(soket){
     //接到某个客户端消息后，广播给所有人
     soket.on('message',function(msgObj){
         msgObj.createAt = new Date().toLocaleString();
+        //console.log(msgObj);
         io.emit('message',msgObj);
     });
 });
