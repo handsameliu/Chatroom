@@ -74,10 +74,25 @@ app.post('/rooms',function(req,res){
 });
 
 app.get('/rooms/:_Id',function(req,res){
-    console.log(req);
-    var roomId = req.pramas.roomId;
-    console.log(roomId);
+    var _id = req.params._Id;
+    console.log(_id);
+    Room.findById({_id},function(err,doc){
+        if(err){
+            res.send({err:1,msg:'进入房间出错',data:err});
+        }else{
+            //保存成功后返回文档对象
+            res.send({err:0,msg:'进入成功',data:doc});
+        }
+    });
+    /*Room.findById({_id}).then(function(result){
+        console.log(reult);
+        res.send({err:0,msg:'进入成功',data:result});
+    },function(err){
+        res.send({err:1,msg:'进入房间出错',data:err});
+    });*/
 });
+
+
 
 app.listen(9090,function(){
     console.log('连接成功');

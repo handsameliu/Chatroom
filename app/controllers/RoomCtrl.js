@@ -7,4 +7,16 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     * 5 客户端拿到room赋给$scope.room
     *
     * */
+    var _id = $routeParams.id;
+    $http({
+        url:'/rooms/'+_id,
+        method:'GET'
+    }).success(function(result){
+        if(result.err==1){
+            $rootScope.errMsg = result.msg;
+        }else{
+            console.log(result.data);
+            $scope.room = result.data;
+        }
+    });
 });
