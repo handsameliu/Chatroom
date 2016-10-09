@@ -28,7 +28,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$rootScope
     *
     * */
 
-    var socket = io.connect('ws://localhost:9090/');
+    var socket = io.connect(`/`);
     //本机测试使用ws://localhost:9090/ 服务器使用IP地址47.88.150.99
     //或者使用`/`, 或者window.location
     socket.on('message',function(msgObj){
